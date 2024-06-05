@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Data Table</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+</head>
+<body>
+    <table id="example" class="display">
+        <thead>
+            <tr>
+                <th>S/NO</th>
+                <th>SUB COUNTY</th>
+                <th>WARD</th>
+                <th>POLLING STATION</th>
+                <th>NAME OF STUDENT</th>
+                <th>ADM/ REG NO</th>
+                <th>FORM/ YEAR</th>
+                <th>INSTITUTION</th>
+                <th>AMOUNT</th>
+                <th>COUNTY OF INSTITUTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be loaded here by JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <!-- PapaParse JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTables
+            var table = $('#example').DataTable();
+
+            // Load CSV file and populate table
+            Papa.parse('TRIAL PHASE.csv', {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    results.data.forEach(function(row) {
+                        table.row.add([
+                            row['S/NO'],
+                            row['SUB COUNTY'],
+                            row['WARD'],
+                            row['POLLING STATION'],
+                            row['NAME OF STUDENT'],
+                            row['ADM/ REG NO'],
+                            row['FORM/ YEAR'],
+                            row['INSTITUTION'],
+                            row['AMOUNT'],
+                            row['COUNTY OF INSTITUTION']
+                        ]).draw(false);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
